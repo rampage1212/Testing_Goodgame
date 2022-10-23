@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Three.js TypeScript Tutorials by Sean Bradley</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            body {
+                overflow: hidden;
+                margin: 0px;
+            }
+
+            .content {
+                position: absolute;
+                right: 100px;
+                top: 50px;
+                /* opacity: 0.3; */
+            }
+
+            #inputGroup-sizing-default {
+                color:black;
+            }
+
+            #label_num {
+                color:white;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="content">
+            <div class="input-group input-group-sm mb-3">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Soldier</span>
+                </div>
+                <input type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" id="number">
+                <button type="button" class="btn btn-dark" onclick="btn_click()">Generate </button>
+              </div>
+            </div>
+            <p class="font-weight-bold" id="label_num"></p>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+            const solid_type = ['Spearmen', 'Swordsmen', 'Archers'];
+
+            let generate_nums = [];
+            let result = [];
+
+            function isArrayInArray(arr, item) {
+                var item_as_string = JSON.stringify(item);
+
+                var contains = arr.some(function (ele) {
+                    return JSON.stringify(ele) === item_as_string;
+                });
+                return contains;
+            }
+
+            function btn_click() {
+                let TOTAL_VALUE = document.getElementById("number").value;
+                let current_value = TOTAL_VALUE;
+
+                if(current_value < 20)
+                    alert('Please input value over 20');
+
+                while (1) {
+                    let num_solider = 0;
+                    for (let i = 0; i < 2; i++) {
+                        num_solider = Math.floor(current_value * Math.random());
+                        generate_nums[i] = num_solider
+                        current_value -= num_solider;
+                    }
+                    generate_nums[2] = current_value;
+                    if (generate_nums[0] === 0 || generate_nums[1] === 0 || generate_nums[2] === 0) {
+                        current_value = TOTAL_VALUE
+                        generate_nums = [];
+                    } else
+                        break;
+                }
+
+                if (isArrayInArray(result, generate_nums)) {
+                    generate_nums = [];
+                    btn_click();
+                    return;
+                }
+
+                result.push(generate_nums);
+                document.getElementById("label_num").innerHTML = "Monster: " + generate_nums[0] + "<br>Archers: " + generate_nums[1] + "<br>Swordsmen: " + generate_nums[2];
+                generate_nums = []
+            }
+        </script>
+        <script type="module" src="bundle.js"></script>
+
+    </body>
+</html>
