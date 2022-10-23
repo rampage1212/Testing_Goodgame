@@ -34,7 +34,7 @@ It uses webpack-dev-server for the development build, and NodeJS with Express fo
 
 Both server and client projects are written in TypeScript.
 
-![](docs/screengrab1.jpg)
+![](docs/interface.jpg)
 
 ## Installing
 
